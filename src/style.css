@@ -1,0 +1,180 @@
+@import url("./assets/fonts/css/fontello.css");
+body{
+    margin:0;
+    padding: 0;
+
+    color: #fff;
+
+}
+#app{
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+.main-wrapper{
+    flex-grow: 1;
+}
+.container{
+    margin: 0 auto;
+    max-width: 1260px;
+    padding: 0 30px;
+}
+.header{
+    margin:40px 0;
+}
+.header__inner{
+    display: flex;
+    justify-content: space-between;
+}
+.header__logo{
+
+}
+
+.menu__list{
+    padding: 0;
+}
+
+.menu__item{
+    display: inline-block;
+    /*padding: 5px 0;*/
+    list-style: none;
+
+}
+
+.menu__link{
+    text-decoration: none;
+    color: black;
+    text-transform: uppercase;
+    font-size: 20px;
+    display: inline-block;
+    margin-right: 15px;
+    padding: 10px 25px;
+}
+.menu__link:hover{
+    background-color: #ffe843;
+}
+.active-link{
+    background-color: black;
+    color: white;
+}
+.menu__toggle{
+    display: none;
+}
+.icon-menu{
+    font-size: 40px;
+}
+[class^="icon-"]:before, [class*=" icon-"]:before {
+    width: 0;
+    padding: 0;
+    margin: 0;
+}
+/*карточка героя*/
+
+.card{
+    display: flex;
+    flex-direction: column;
+
+    margin: 0 10px;
+
+}
+.card__img{
+    max-width: 100%;
+}
+.card__like{
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}.card__name{
+     font-weight: bold;
+ }
+
+
+/*галерея*/
+.gallery{
+    margin: 0 -10px;
+}
+.gallery__list{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0;
+    padding: 0;
+}
+.gallery__item{
+    list-style: none;
+    width: 20%;
+    margin-bottom: 5%;
+}
+
+
+
+@media all and (max-width:1080px) {
+    .header__logo{
+        width: 45%;
+    }
+    .gallery__item{
+        width: 33.33333%;
+        margin-bottom: 8%;
+    }
+    .menu__toggle{
+        display: inline-block;
+    }
+    .menu__item{
+        display: block;
+    }
+    .menu__list{
+        display: none;
+    }
+    .menu__list_dropdown{
+      display: flex;
+        flex-direction:column;
+        position: absolute;
+        background-color: rgba(36, 36, 36, 0.7);
+        text-align: center;
+        width: 100vw;
+        max-width:100% !important;
+        left: 0
+    }
+
+}
+@media all and (max-width:700px) {
+
+    .gallery__item{
+        width: 50%;
+    }
+    .card__name{
+        font-size: 25px;
+    }
+    .menu__item a{
+        font-size: 35px;
+    }
+}
+@media all and (max-width:550px) {
+    .container{
+        padding: 0 25px;
+    }
+    .gallery__item{
+        width: 100%;
+    }
+    .card{
+        padding: 0;
+    }
+    .card__name{
+        font-size: 30px;
+    }
+
+}
+
+
+
+.footer{
+    flex-shrink: 0;
+    border-top:1px solid #000;
+    height: 100px;
+    vertical-align: center;
+    display: flex;
+}
+.footer__text{
+    margin: auto;
+}
