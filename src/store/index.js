@@ -3,7 +3,8 @@ import axios from 'axios'
 
 export default createStore({
   state: {
-    heroes: []
+    heroes: [],
+    cart: []
   },
   mutations: {
     SET_HEROES_TO_STATE: (state, filterData) => {
@@ -22,11 +23,10 @@ export default createStore({
       let tempArr = [] // временное хранилище массивов, то есть сюда каждую итерацию поступают новые общъекты
       const showDetail = (data) => { // стрелочная дает возможность обращаться к значениям в data
         // const prevSum = this.heroes.length
-        const prevSum = 1
 
-        const filterData = Object.keys(data.results).map(key => { // Этот блок можно полностью в мутацию, наверное
+        const filterData = Object.keys(data.results).map(key => {
           return {
-            id: Number(key) + 1 + prevSum,
+            id: Number(key) + 1 + tempArr.length,
             name: data.results[key].name,
             gender: data.results[key].gender
           }
@@ -49,6 +49,9 @@ export default createStore({
   getters: {
     HEROES (state) {
       return state.heroes
+    },
+    CART (state) {
+      return state.cart
     }
   }
 })

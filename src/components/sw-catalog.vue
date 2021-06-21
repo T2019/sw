@@ -4,10 +4,10 @@
     <div class="gallery">
       <ul class="gallery__list">
         <swCatalogItem
-          v-for="hero in $store.state.heroes"
+          v-for="hero in HEROES"
           :key="hero.id"
           :hero_data="hero"
-          @sendId="showChildId"
+          @addToCart="addToCart"
         />
       </ul>
     </div>
@@ -16,7 +16,7 @@
 
 <script>
 import swCatalogItem from './sw-catalog-item'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 'sw-catalog',
@@ -31,9 +31,14 @@ export default {
     ...mapActions([
       'GET_HEROES_FROM_API'
     ]),
-    showChildId (data) {
+    addToCart (data) { // выводим объект по которому кликнули
       console.log(data)
     }
+  },
+  computed: {
+    ...mapGetters([
+      'HEROES'
+    ])
   },
   mounted () {
     this.GET_HEROES_FROM_API()

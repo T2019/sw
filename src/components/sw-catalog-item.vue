@@ -1,10 +1,10 @@
 <template>
   <li class="gallery__item">
     <div class="card">
-      <img class="card__img" alt="">
+      <img class="card__img" :src=" 'https://starwars-visualguide.com/assets/img/characters/' + hero_data.id +'.jpg' " alt="">
       <p class="card__name">{{hero_data.name}}</p>
       <div class="card__like-wrap">
-        <a class="card__like" @click="sendDataToParent"><i class="icon-heart-empty"></i></a>
+        <a class="card__like" @click="addToCart"><i class="icon-heart-empty"></i></a>
       </div>
     </div>
   </li>
@@ -26,9 +26,8 @@ export default {
   },
   computed: {},
   methods: {
-    sendDataToParent () {
-      // this.$emit('sendId',this.hero_data.id)  передаем родителю айдишник карточки по которой кликнули
-      console.log(this.$store.state.heroes)
+    addToCart () {
+      this.$emit('addToCart', this.hero_data)
     }
   }
 }
