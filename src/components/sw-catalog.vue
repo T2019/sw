@@ -1,5 +1,6 @@
 <template>
   <div class="catalog">
+
     <h1>Catalog</h1>
     <div class="gallery">
       <ul class="gallery__list">
