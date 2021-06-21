@@ -3,7 +3,10 @@
     <div class="container">
       <p>Main wrappss</p>
       <swCatalog></swCatalog>
-      <swCart v-if="CART.length"></swCart>
+      <swCart v-if="CART.length"
+      :cart_data="CART"
+      >
+      </swCart>
     </div>
   </div>
 </template>

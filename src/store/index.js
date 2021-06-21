@@ -11,7 +11,22 @@ export default createStore({
       state.heroes = state.heroes.concat(filterData)
     },
     SET_CART: (state, hero) => {
-      state.cart.push(hero)
+      if (state.cart.length) {
+        let isHeroExists = false
+        state.cart.forEach(item => {
+          if (item.id === hero.id) {
+            isHeroExists = true
+          }
+        })
+        if (!isHeroExists) {
+          state.cart.push(hero)
+        }
+      } else {
+        state.cart.push(hero)
+      }
+    },
+    REMOVE_FROM_CART: (state, index) => {
+      state.cart.splice(index, 1)
     }
   },
   actions: {
@@ -35,10 +50,7 @@ export default createStore({
           }
         })
 
-        // this.heroes = this.heroes.concat(filterData)
-        // commit('SET_HEROES_TO_STATE',filterData)
-
-        tempArr = tempArr.concat(filterData)
+        tempArr = tempArr.concat(filterData) // конкатенируем массив
 
         if (data.next) {
           getHeroesData(data.next)
@@ -50,6 +62,9 @@ export default createStore({
     },
     ADD_TO_CART ({ commit }, hero) {
       commit('SET_CART', hero)
+    },
+    DELETE_FROM_CART ({ commit }, index) {
+      commit('REMOVE_FROM_CART', index)
     }
   },
   getters: {
