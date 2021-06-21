@@ -29,10 +29,11 @@ export default {
   },
   methods: {
     ...mapActions([
-      'GET_HEROES_FROM_API'
+      'GET_HEROES_FROM_API',
+      'ADD_TO_CART'
     ]),
-    addToCart (data) { // выводим объект по которому кликнули
-      console.log(data)
+    addToCart (data) { // тут выводили объект по которому кликнули. При клике
+      this.ADD_TO_CART(data)
     }
   },
   computed: {

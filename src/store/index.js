@@ -9,6 +9,9 @@ export default createStore({
   mutations: {
     SET_HEROES_TO_STATE: (state, filterData) => {
       state.heroes = state.heroes.concat(filterData)
+    },
+    SET_CART: (state, hero) => {
+      state.cart.push(hero)
     }
   },
   actions: {
@@ -44,6 +47,9 @@ export default createStore({
         }
       }
       getHeroesData('https://swapi.dev/api/people')
+    },
+    ADD_TO_CART ({ commit }, hero) {
+      commit('SET_CART', hero)
     }
   },
   getters: {
