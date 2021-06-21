@@ -1,14 +1,12 @@
 <template>
-  <div class="main-wrapper">
-    <div class="container">
+  <div class="cart">
 
-    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'main-wrapper'
+  name: 'sw-cart'
 }
 </script>
 
