@@ -10,7 +10,7 @@
                 <router-link to="/" class="menu__link">Главная</router-link>
               </li>
               <li class="menu__item" >
-                <router-link :to="{name: 'cart', params: {cart_data: CART}}" class="menu__link">Любимые герои</router-link>
+                <router-link to="/cart" class="menu__link">Любимые герои</router-link>
               </li>
             </ul>
           </nav>
@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+
 export default {
   data () {
     return {
@@ -38,9 +38,7 @@ export default {
 
   },
   computed: {
-    ...mapGetters([
-      'CART'
-    ])
+
   }
 }
 </script>

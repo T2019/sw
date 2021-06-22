@@ -1,7 +1,17 @@
 <template>
   <div class="catalog">
 
-    <h1>Catalog</h1>
+    <div class="search-field">
+      <input
+        class="search-field__input"
+        type="text"
+        placeholder="Найди своего героя..."
+      >
+      <button class="search-field__btn">
+        <i class="icon-search"></i>
+      </button>
+    </div>
+
     <div class="gallery">
       <ul class="gallery__list">
         <swCatalogItem
@@ -41,10 +51,8 @@ export default {
     ...mapGetters([
       'HEROES'
     ])
-  },
-  mounted () {
-    this.GET_HEROES_FROM_API()
   }
+
 }
 
 </script>

@@ -1,4 +1,5 @@
 
 .icon-heart:before { content: '\e800'; } /* '' */
 .icon-heart-empty:before { content: '\e801'; } /* '' */
+.icon-search:before { content: '\e802'; } /* '' */
 .icon-menu:before { content: '\f0c9'; } /* '' */

@@ -1,6 +1,6 @@
 <template>
   <div class="catalog">
-    <h1>Cart</h1>
+
     <div class="gallery">
       <ul class="gallery__list">
         <p v-if="!CART.length">Любимых героев пока не добавлено.</p>

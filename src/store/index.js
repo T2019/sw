@@ -16,6 +16,7 @@ export default createStore({
         state.cart.forEach(item => {
           if (item.id === hero.id) {
             isHeroExists = true
+            // return
           }
         })
         if (!isHeroExists) {
