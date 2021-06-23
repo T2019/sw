@@ -2,9 +2,11 @@
   <swHeader></swHeader>
   <div class="main-wrapper">
     <div class="container">
-
-        <router-view></router-view>
-
+     <router-view v-slot="{ Component }"> <!--  так решил проблему с постоянным запуском хука created-->
+        <keep-alive>
+          <component :is="Component" />
+        </keep-alive>
+     </router-view>
 <!--      <p>Main wrappss</p>-->
 <!--      <swCatalog></swCatalog>-->
 <!--      <swCart v-if="CART.length"-->
@@ -35,10 +37,8 @@ export default {
     ...mapGetters([
       'CART'
     ])
-  },
-  created () {
-    this.GET_HEROES_FROM_API()
   }
+
 }
 </script>
 

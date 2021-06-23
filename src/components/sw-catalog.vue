@@ -16,7 +16,7 @@
     <div class="gallery">
       <ul class="gallery__list">
         <swCatalogItem
-          v-for="hero in HEROES"
+          v-for="hero in sortedHeroes"
           :key="hero.id"
           :hero_data="hero"
           @addToCart="addToCart"
@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      // 'GET_HEROES_FROM_API',
+      'GET_HEROES_FROM_API',
       'ADD_TO_CART'
     ]),
     addToCart (data) { // тут выводили объект по которому кликнули. При клике
@@ -64,6 +64,13 @@ export default {
     ...mapGetters([
       'HEROES'
     ])
+  },
+  mounted () {
+    this.GET_HEROES_FROM_API().then((response) => {
+      if (response.data) {
+        this.sortHeroesBySearchValue(this.searchValue)
+      }
+    })
   },
   watch: {
     searchValue () {

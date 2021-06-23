@@ -5,10 +5,11 @@ export default createStore({
   state: {
     heroes: [],
     cart: []
+
   },
   mutations: {
-    SET_HEROES_TO_STATE: (state, filterData) => {
-      state.heroes = state.heroes.concat(filterData)
+    SET_HEROES_TO_STATE: (state, tempArr) => {
+      state.heroes = state.heroes.concat(tempArr)
     },
     SET_CART: (state, hero) => {
       if (state.cart.length) {
@@ -32,32 +33,37 @@ export default createStore({
   },
   actions: {
     GET_HEROES_FROM_API ({ commit }) {
-      function getHeroesData (apiURL) {
-        axios
-          .get(apiURL)
-          .then(function (response) {
-            showDetail(response.data)
-          }).catch(error => console.log(error))
-      }
-      let tempArr = [] // временное хранилище массивов, то есть сюда каждую итерацию поступают новые общъекты
-      const showDetail = (data) => {
-        const filterData = Object.keys(data.results).map(key => {
-          return {
-            id: Number(key) + 1 + tempArr.length,
-            name: data.results[key].name,
-            gender: data.results[key].gender
-          }
-        })
+      return new Promise((resolve, reject) => {
+        let tempArr = [] // временное хранилище массивов, то есть сюда каждую итерацию поступают новые общъекты
+        getHeroesData('https://swapi.dev/api/people')
+        function getHeroesData (apiURL) {
+          axios
+            .get(apiURL)
+            .then((response) => {
+              const showDetail = (data) => {
+                const filterData = Object.keys(data.results).map(key => {
+                  return {
+                    id: Number(key) + 1 + tempArr.length,
+                    name: data.results[key].name,
+                    gender: data.results[key].gender
+                  }
+                })
 
-        tempArr = tempArr.concat(filterData) // конкатенируем массив
+                tempArr = tempArr.concat(filterData) // конкатенируем массив
 
-        if (data.next) {
-          getHeroesData(data.next)
-        } else {
-          commit('SET_HEROES_TO_STATE', tempArr) // как только кончились следующие объекты, то делаем коммит мутации
+                if (data.next) {
+                  getHeroesData(data.next)
+                } else {
+                  commit('SET_HEROES_TO_STATE', tempArr)// как только кончились следующие объекты, то делаем коммит мутации
+                  resolve(response)
+                }
+              }
+              showDetail(response.data)
+            }, error => {
+              reject(error)
+            })
         }
-      }
-      getHeroesData('https://swapi.dev/api/people')
+      })
     },
     ADD_TO_CART ({ commit }, hero) {
       commit('SET_CART', hero)
@@ -73,5 +79,6 @@ export default createStore({
     CART (state) {
       return state.cart
     }
+
   }
 })
