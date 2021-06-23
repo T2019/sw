@@ -40,9 +40,7 @@ export default createStore({
           }).catch(error => console.log(error))
       }
       let tempArr = [] // временное хранилище массивов, то есть сюда каждую итерацию поступают новые общъекты
-      const showDetail = (data) => { // стрелочная дает возможность обращаться к значениям в data
-        // const prevSum = this.heroes.length
-
+      const showDetail = (data) => {
         const filterData = Object.keys(data.results).map(key => {
           return {
             id: Number(key) + 1 + tempArr.length,
