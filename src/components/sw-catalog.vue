@@ -16,13 +16,23 @@
     <div class="gallery">
       <ul class="gallery__list">
         <swCatalogItem
-          v-for="hero in sortedHeroes"
+          v-for="hero in paginatedHeroes"
           :key="hero.id"
           :hero_data="hero"
           @addToCart="addToCart"
 
         />
       </ul>
+    </div>
+    <div class="pagination">
+      <div class="page"
+        v-for="page in pages"
+           :key="page"
+           @click="pageClick(page)"
+           :class="{'page_selected': page===pageNumber}"
+      >{{page}}
+
+      </div>
     </div>
   </div>
 </template>
@@ -38,7 +48,11 @@ export default {
   data () {
     return {
       searchValue: '',
-      sortedHeroes: []
+      sortedHeroes: [],
+      myItem: [],
+
+      heroPerPage: 10,
+      pageNumber: 1
     }
   },
   methods: {
@@ -46,9 +60,13 @@ export default {
       'GET_HEROES_FROM_API',
       'ADD_TO_CART'
     ]),
-    addToCart (data) { // тут выводили объект по которому кликнули. При клике
+
+    // добавляем героя
+    addToCart (data) {
       this.ADD_TO_CART(data)
     },
+
+    // поиск
     sortHeroesBySearchValue (value) {
       this.sortedHeroes = [...this.HEROES]
       if (value) {
@@ -56,14 +74,32 @@ export default {
           return item.name.toLowerCase().includes(value.toLowerCase())
         })
       } else {
-        this.sortedHeroes = this.HEROES
+        this.sortedHeroes = [...this.HEROES]
       }
+    },
+
+    // по клику переходим на выбранную страницу пагинации
+    pageClick (page) {
+      this.pageNumber = page
     }
   },
   computed: {
     ...mapGetters([
       'HEROES'
-    ])
+    ]),
+    pages () {
+      return Math.ceil(this.sortedHeroes.length / this.heroPerPage)
+    },
+    paginatedHeroes () {
+      const from = (this.pageNumber - 1) * this.heroPerPage
+      const to = from + this.heroPerPage
+
+      if (this.sortedHeroes.length <= this.heroPerPage) {
+        return this.sortedHeroes.slice(0, this.sortedHeroes.length)
+      } else {
+        return this.sortedHeroes.slice(from, to)
+      }
+    }
   },
   mounted () {
     this.GET_HEROES_FROM_API().then((response) => {

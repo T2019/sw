@@ -90,6 +90,26 @@ body{
      font-weight: bold;
  }
 
+ /*пагинация*/
+.pagination{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+.page {
+    padding: 8px;
+    border: 1px solid #e7e7e7;
+}
+.page:hover {
+    background: #000;
+    cursor: pointer;
+    color: #fff;
+}
+.page_selected{
+    background: #000;
+    cursor: pointer;
+    color: #fff;
+}
 
 /*галерея*/
 .gallery{
