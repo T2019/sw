@@ -7,18 +7,14 @@
           <component :is="Component" />
         </keep-alive>
      </router-view>
-<!--      <p>Main wrappss</p>-->
-<!--      <swCatalog></swCatalog>-->
-<!--      <swCart v-if="CART.length"-->
-<!--      :cart_data="CART"-->
-<!--      >-->
-<!--      </swCart>-->
     </div>
   </div>
+  <swFooter></swFooter>
 </template>
 
 <script>
 import swHeader from './sw-header'
+import swFooter from './sw-footer'
 // import swCatalog from './sw-catalog'
 // import swCart from './sw-cart'
 import { mapActions, mapGetters } from 'vuex'
@@ -26,7 +22,7 @@ import { mapActions, mapGetters } from 'vuex'
 export default {
   name: 'sw-main-wrapper',
   // components: { swCatalog, swCart },
-  components: { swHeader },
+  components: { swHeader, swFooter },
   methods: {
     ...mapActions([
       'GET_HEROES_FROM_API'

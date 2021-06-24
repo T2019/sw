@@ -8,9 +8,9 @@
         placeholder="Найди своего героя..."
         v-model="searchValue"
       >
-      <button class="search-field__btn" @click="search">
-        <i class="icon-search"></i>
-      </button>
+<!--      <button class="search-field__btn" @click="search">-->
+<!--        <i class="icon-search"></i>-->
+<!--      </button>-->
     </div>
 
     <div class="gallery">
@@ -24,14 +24,15 @@
         />
       </ul>
     </div>
+
     <div class="pagination">
       <div class="page"
         v-for="page in pages"
            :key="page"
            @click="pageClick(page)"
            :class="{'page_selected': page===pageNumber}"
-      >{{page}}
 
+      >{{page}}
       </div>
     </div>
   </div>
@@ -53,6 +54,7 @@ export default {
 
       heroPerPage: 10,
       pageNumber: 1
+
     }
   },
   methods: {
@@ -90,6 +92,7 @@ export default {
     pages () {
       return Math.ceil(this.sortedHeroes.length / this.heroPerPage)
     },
+
     paginatedHeroes () {
       const from = (this.pageNumber - 1) * this.heroPerPage
       const to = from + this.heroPerPage

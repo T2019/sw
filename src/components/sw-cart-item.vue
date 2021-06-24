@@ -3,9 +3,7 @@
     <div class="card">
       <img :src=" 'https://starwars-visualguide.com/assets/img/characters/' + cart_item_data.id +'.jpg' " alt="">
       <p class="card__name">{{cart_item_data.name}}</p>
-      <div class="card__like-wrap">
         <a class="card__like" @click="deleteItem"><i class="icon-heart-empty"></i></a>
-      </div>
     </div>
   </li>
 

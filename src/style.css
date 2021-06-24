@@ -89,7 +89,10 @@ body{
 }.card__name{
      font-weight: bold;
  }
-
+.icon-heart-empty{
+    font-size: 30px;
+    
+}
  /*пагинация*/
 .pagination{
     display: flex;
@@ -129,23 +132,20 @@ body{
 
 /*П О И С К*/
 .search-field{
-    display: flex;
+
     position: relative;
-    width: 40%;
+    width: 500px;
     height: 45px;
     margin: 0 auto 50px;
     border: none;
 }
 .search-field__input{
 
-
+    height: 45px;
     width: 100%;
-    padding-left: 10px;
+    text-align: center;
     border: 1px solid #000;
-
     outline: none;
-
-
     font-size: 18px;
 }
 .search-field__btn{
@@ -180,21 +180,30 @@ body{
     }
     .menu__item{
         display: block;
+
     }
     .menu__list{
         display: none;
+    }
+    .menu__link{
+        font-size: 35px;
     }
     .menu__list_dropdown{
       display: flex;
         flex-direction:column;
         position: absolute;
+        height: 100vh;
+        justify-content: space-evenly;
         background-color: rgba(36, 36, 36, 0.7);
         text-align: center;
         width: 100vw;
         max-width:100% !important;
-        left: 0
+        left: 0;
+        z-index: 9999999;
     }
-
+    .page{
+        font-size: 35px;
+    }
 }
 @media all and (max-width:700px) {
 
@@ -207,6 +216,12 @@ body{
     .menu__item a{
         font-size: 35px;
     }
+    .search-field{
+        width: 100%;
+    }
+    .page{
+        font-size: 40px;
+    }
 }
 @media all and (max-width:550px) {
     .container{
@@ -214,6 +229,7 @@ body{
     }
     .gallery__item{
         width: 100%;
+        margin-bottom: 110px;
     }
     .card{
         padding: 0;
@@ -221,7 +237,9 @@ body{
     .card__name{
         font-size: 30px;
     }
-
+    .icon-heart-empty{
+        font-size: 40px;
+    }
 }
 
 
