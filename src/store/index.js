@@ -8,7 +8,8 @@ import getters from './getters/getters'
 export default createStore({
   state: {
     heroes: [],
-    cart: []
+    cart: [],
+    resp: null,
 
   },
   mutations,

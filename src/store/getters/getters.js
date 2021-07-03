@@ -4,5 +4,8 @@ export default {
   },
   CART (state) {
     return state.cart
+  },
+  EXP_HEROES(state){
+    return state.resp
   }
 }

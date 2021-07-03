@@ -20,5 +20,9 @@ export default {
   },
   REMOVE_FROM_CART: (state, index) => {
     state.cart.splice(index, 1)
+  },
+  SET_TO_STATE:(state, response) => {
+    state.resp = response
   }
 }
+
