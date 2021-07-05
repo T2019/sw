@@ -7,5 +7,8 @@ export default {
   },
   EXP_HEROES(state){
     return state.resp
+  },
+  CURRENT_PAGE(state){        // текущая страница пагинации
+    return state.currentPage
   }
 }

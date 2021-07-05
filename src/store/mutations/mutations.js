@@ -23,6 +23,10 @@ export default {
   },
   SET_TO_STATE:(state, response) => {
     state.resp = response
+  },
+
+  SET_PAGE_TO_STORE:(state, page)=>{
+    state.currentPage = page
   }
 }
 

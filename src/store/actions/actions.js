@@ -1,10 +1,13 @@
 import axios from 'axios'
 
+
 export default {
-  GET_HEROES_FROM_API ({ commit }) {
-    axios
-      .get('https://swapi.dev/api/people')
-      .then(response => commit('SET_TO_STATE', response.data))
+  //
+  // GET_HEROES_FROM_API ({ commit, getters }) {
+  //   axios
+  //     .get('https://swapi.dev/api/people/?page=' + this.CURRENT_PAGE + 1 )
+  //
+  //     .then(response => commit('SET_TO_STATE', response.data))
 
 
 
@@ -39,11 +42,15 @@ export default {
     //       })
     //   }
     // })
-  },
+  // },
   ADD_TO_CART ({ commit }, hero) {
     commit('SET_CART', hero)
   },
   DELETE_FROM_CART ({ commit }, index) {
     commit('REMOVE_FROM_CART', index)
-  }
+  },
+
+  PAGE_TO_STORE({commit}, page){
+    commit('SET_PAGE_TO_STORE', page)
+  },
 }

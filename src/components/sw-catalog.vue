@@ -1,6 +1,6 @@
 <template>
   <div class="catalog">
-    <div>{{EXP_HEROES}}</div>
+    <div>{{resp}}</div>
     <div class="search-field">
       <input
         class="search-field__input"
@@ -36,7 +36,12 @@
       </div>
     </div>
     <div>
-      <pagination v-model="page" :records="500" :per-page="25" @paginate="myCallback"/>
+      <pagination
+        v-model="page"
+        :records="heroesVolume"
+        :per-page="10"
+        @paginate="getHeroesFromURL"
+      />
     </div>
   </div>
 
@@ -46,6 +51,7 @@
 import swCatalogItem from './sw-catalog-item'
 import { mapActions, mapGetters } from 'vuex'
 import Pagination from 'v-pagination-3';
+import axios from "axios";
 
 
 export default {
@@ -61,13 +67,65 @@ export default {
       heroPerPage: 10,
       pageNumber: 1,
 
-      page: 1
+      page: 1, //стартовая страница пагинации
+      resp: {},
+      heroesVolume: 0,
+      filterData:[],
     }
   },
   methods: {
+    getHeroesFromURL(page){
+      if(page === 1){
+        return axios
+          .get('https://swapi.dev/api/people/')
+          .then((response) => {
+            const setValueToPagination = (data) => {
+              this.resp = data
+              this.heroesVolume = data.count
+
+              const filterData = Object.keys(data.results).map(key => {
+                return {
+                  id: Number(key)+1,
+                  name: data.results[key].name,
+                  gender: data.results[key].gender
+                }
+              })
+              console.log(filterData)
+
+            }
+            setValueToPagination(response.data)
+
+
+          })
+      }else{
+        return axios
+          .get('https://swapi.dev/api/people/?page=' + page)
+          .then((response) => {
+            const setValueToPagination = (data) => {
+              this.resp = data
+              this.heroesVolume = data.count
+
+              const filterData = Object.keys(data.results).map(key => {
+                return {
+                  id: Number(key)+1,
+                  name: data.results[key].name,
+                  gender: data.results[key].gender
+                }
+              })
+              console.log(filterData)
+            }
+            setValueToPagination(response.data)
+
+          })
+      }
+
+
+
+
+    },
     ...mapActions([
-      'GET_HEROES_FROM_API',
-      'ADD_TO_CART'
+      'ADD_TO_CART',
+      'PAGE_TO_STORE'
     ]),
 
     // добавляем героя
@@ -98,12 +156,15 @@ export default {
   computed: {
     ...mapGetters([
       'HEROES',
-      'EXP_HEROES'
+      'EXP_HEROES',
+      'CURRENT_PAGE',
     ]),
     pages () {
       return Math.ceil(this.sortedHeroes.length / this.heroPerPage)
     },
-
+    totalPages(){
+      return Math.ceil(this.heroesVolume / this.heroPerPage)
+    },
     paginatedHeroes () {
       const from = (this.pageNumber - 1) * this.heroPerPage
       const to = from + this.heroPerPage
@@ -116,17 +177,23 @@ export default {
     }
   },
   mounted () {
-    this.GET_HEROES_FROM_API()
+    //this.GET_HEROES_FROM_API()
     //   .then((response) => {
     //   if (response.data) {
     //     this.sortHeroesBySearchValue(this.searchValue)
     //   }
     // })
+    this.getHeroesFromURL(this.page)
   },
   watch: {
     searchValue () {
       this.sortHeroesBySearchValue(this.searchValue)
-    }
+    },
+    page(){
+      this.PAGE_TO_STORE(this.page)
+
+    },
+
 
   }
 

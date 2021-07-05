@@ -9,8 +9,9 @@ export default createStore({
   state: {
     heroes: [],
     cart: [],
-    resp: null,
+    // resp: null,
 
+    currentPage: Number, //текущая страница пагинации
   },
   mutations,
   actions,
