@@ -11,7 +11,12 @@ export default createStore({
     cart: [],
     // resp: null,
 
-    currentPage: Number, //текущая страница пагинации
+    currentPage: 0, //текущая страница пагинации
+    heroesVolume:0,//количество объектов
+    resp:[],//данные объектов
+    //filterData:[],
+    imgNum:0, //номер для изображения
+
   },
   mutations,
   actions,

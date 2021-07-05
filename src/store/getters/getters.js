@@ -8,7 +8,23 @@ export default {
   EXP_HEROES(state){
     return state.resp
   },
+
+
   CURRENT_PAGE(state){        // текущая страница пагинации
     return state.currentPage
-  }
+  },
+  HEROES_VOLUME(state){
+    return state.heroesVolume
+  },
+
+  RESP(state){
+    return state.resp
+  },
+  FILTER_DATA(state){
+    return state.filterData
+  },
+  IMG_NUM(state){
+    return state.imgNum
+  },
+
 }

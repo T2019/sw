@@ -1,6 +1,8 @@
 export default {
-  SET_HEROES_TO_STATE: (state, tempArr) => {
-    state.heroes = state.heroes.concat(tempArr)
+  SET_HEROES_TO_STATE: (state, heroesData) => {
+      state.resp = heroesData.respFilter
+      state.heroesVolume = heroesData.heroesVolumeA
+      state.imgNum = heroesData.imgNumber
   },
   SET_CART: (state, hero) => {
     if (state.cart.length) {
@@ -25,8 +27,10 @@ export default {
     state.resp = response
   },
 
+
   SET_PAGE_TO_STORE:(state, page)=>{
     state.currentPage = page
-  }
+  },
+
 }
 

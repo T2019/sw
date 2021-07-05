@@ -2,6 +2,42 @@ import axios from 'axios'
 
 
 export default {
+
+  GET_HEROES_FROM_API ({commit},page) {
+
+
+        return axios
+          .get('https://swapi.dev/api/people/?page=' + page)
+          .then((response) => {
+
+            const setValueToPagination = (data) => {
+
+              const filterData = Object.keys(data.results).map(key => {
+                return {
+                  id: Number(key)+1,
+                  name: data.results[key].name,
+                  gender: data.results[key].gender,
+                  imgNumber: parseInt((data.results[key].url).match(/(\d+)/)[0])
+                }
+              })
+
+              console.log(filterData)
+
+              // let respFilter = filterData
+              // let heroesVolumeA = data.count
+              commit('SET_HEROES_TO_STATE',{
+                respFilter:filterData,
+                heroesVolumeA:data.count,
+              })
+            }
+            setValueToPagination(response.data)
+
+
+          })
+
+  },
+
+
   //
   // GET_HEROES_FROM_API ({ commit, getters }) {
   //   axios

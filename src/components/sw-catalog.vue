@@ -1,6 +1,6 @@
 <template>
   <div class="catalog">
-    <div>{{resp}}</div>
+
     <div class="search-field">
       <input
         class="search-field__input"
@@ -16,7 +16,7 @@
     <div class="gallery">
       <ul class="gallery__list">
         <swCatalogItem
-          v-for="hero in paginatedHeroes"
+          v-for="hero in RESP"
           :key="hero.id"
           :hero_data="hero"
           @addToCart="addToCart"
@@ -25,22 +25,22 @@
       </ul>
     </div>
 
-    <div class="pagination">
-      <div class="page"
-        v-for="page in pages"
-           :key="page"
-           @click="pageClick(page)"
-           :class="{'page_selected': page===pageNumber}"
+<!--    <div class="pagination">-->
+<!--      <div class="page"-->
+<!--        v-for="page in RESP"-->
+<!--           :key="page"-->
+<!--           @click="pageClick(page)"-->
+<!--           :class="{'page_selected': page===pageNumber}"-->
 
-      >{{page}}
-      </div>
-    </div>
+<!--      >{{page}}-->
+<!--      </div>-->
+<!--    </div>-->
     <div>
       <pagination
         v-model="page"
         :records="heroesVolume"
         :per-page="10"
-        @paginate="getHeroesFromURL"
+        @paginate="GET_HEROES_FROM_API(page)"
       />
     </div>
   </div>
@@ -69,63 +69,64 @@ export default {
 
       page: 1, //стартовая страница пагинации
       resp: {},
-      heroesVolume: 0,
+      heroesVolume: 82,
       filterData:[],
     }
   },
   methods: {
-    getHeroesFromURL(page){
-      if(page === 1){
-        return axios
-          .get('https://swapi.dev/api/people/')
-          .then((response) => {
-            const setValueToPagination = (data) => {
-              this.resp = data
-              this.heroesVolume = data.count
-
-              const filterData = Object.keys(data.results).map(key => {
-                return {
-                  id: Number(key)+1,
-                  name: data.results[key].name,
-                  gender: data.results[key].gender
-                }
-              })
-              console.log(filterData)
-
-            }
-            setValueToPagination(response.data)
-
-
-          })
-      }else{
-        return axios
-          .get('https://swapi.dev/api/people/?page=' + page)
-          .then((response) => {
-            const setValueToPagination = (data) => {
-              this.resp = data
-              this.heroesVolume = data.count
-
-              const filterData = Object.keys(data.results).map(key => {
-                return {
-                  id: Number(key)+1,
-                  name: data.results[key].name,
-                  gender: data.results[key].gender
-                }
-              })
-              console.log(filterData)
-            }
-            setValueToPagination(response.data)
-
-          })
-      }
-
-
+    // getHeroesFromURL(page){
+    //   if(page === 1){
+    //     return axios
+    //       .get('https://swapi.dev/api/people/')
+    //       .then((response) => {
+    //         const setValueToPagination = (data) => {
+    //           this.resp = data
+    //           this.heroesVolume = data.count
+    //
+    //           const filterData = Object.keys(data.results).map(key => {
+    //             return {
+    //               id: Number(key)+1,
+    //               name: data.results[key].name,
+    //               gender: data.results[key].gender
+    //             }
+    //           })
+    //           console.log(filterData)
+    //
+    //         }
+    //         setValueToPagination(response.data)
+    //
+    //
+    //       })
+    //   }else{
+    //     return axios
+    //       .get('https://swapi.dev/api/people/?page=' + page)
+    //       .then((response) => {
+    //         const setValueToPagination = (data) => {
+    //           this.resp = data
+    //           this.heroesVolume = data.count
+    //
+    //           const filterData = Object.keys(data.results).map(key => {
+    //             return {
+    //               id: Number(key)+1,
+    //               name: data.results[key].name,
+    //               gender: data.results[key].gender
+    //             }
+    //           })
+    //           console.log(filterData)
+    //         }
+    //         setValueToPagination(response.data)
+    //
+    //       })
+    //   }
 
 
-    },
+
+
+    //},
     ...mapActions([
       'ADD_TO_CART',
-      'PAGE_TO_STORE'
+      'PAGE_TO_STORE',
+      'GET_HEROES_FROM_API',
     ]),
 
     // добавляем героя
@@ -157,7 +158,12 @@ export default {
     ...mapGetters([
       'HEROES',
       'EXP_HEROES',
-      'CURRENT_PAGE',
+      'CURRENT_PAGE', //текущая страница пагинации
+      'HEROES_VOLUME',
+      'RESP',
+      'FILTER_DATA',
+      'IMG_NUM',
+
     ]),
     pages () {
       return Math.ceil(this.sortedHeroes.length / this.heroPerPage)
@@ -183,7 +189,10 @@ export default {
     //     this.sortHeroesBySearchValue(this.searchValue)
     //   }
     // })
-    this.getHeroesFromURL(this.page)
+
+    //this.getHeroesFromURL(this.page)
+    this.GET_HEROES_FROM_API(this.page)
+
   },
   watch: {
     searchValue () {
