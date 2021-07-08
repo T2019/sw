@@ -26,5 +26,11 @@ export default {
   IMG_NUM(state){
     return state.imgNum
   },
+  NOTHING_FOUND(state) {
+    return state.nothingFound
+  },
+  TRANSITION(state){
+    return state.transition
+  },
 
 }

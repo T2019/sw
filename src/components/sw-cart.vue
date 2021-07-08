@@ -7,7 +7,7 @@
 
         <swCartItem
           v-for="(item,index) in CART"
-          :key="item.id"
+          :key="item.imgNumber"
           :cart_item_data="item"
           @deleteItem="deleteItem(index)"
         />

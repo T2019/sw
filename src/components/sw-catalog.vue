@@ -8,37 +8,32 @@
         placeholder="Найди своего героя..."
         v-model="searchValue"
       >
-<!--      <button class="search-field__btn" @click="search">-->
-<!--        <i class="icon-search"></i>-->
-<!--      </button>-->
+      <button class="search-field__btn" @click="searchTheHero">
+        <i class="icon-search"></i>
+      </button>
     </div>
+
+
+    <h2 v-if="NOTHING_FOUND===true">По данному запросу ничего не нашлось</h2>
 
     <div class="gallery">
       <ul class="gallery__list">
         <swCatalogItem
           v-for="hero in RESP"
-          :key="hero.id"
+          :key="hero.imgNumber"
           :hero_data="hero"
           @addToCart="addToCart"
-
         />
       </ul>
     </div>
+    <p v-if="TRANSITION===true">
+      <span class="backToList" @click="GET_HEROES_FROM_API(page)">Назад к списку</span>
+    </p>
 
-<!--    <div class="pagination">-->
-<!--      <div class="page"-->
-<!--        v-for="page in RESP"-->
-<!--           :key="page"-->
-<!--           @click="pageClick(page)"-->
-<!--           :class="{'page_selected': page===pageNumber}"-->
-
-<!--      >{{page}}-->
-<!--      </div>-->
-<!--    </div>-->
     <div>
       <pagination
         v-model="page"
-        :records="heroesVolume"
+        :records="HEROES_VOLUME"
         :per-page="10"
         @paginate="GET_HEROES_FROM_API(page)"
       />
@@ -71,6 +66,7 @@ export default {
       resp: {},
       heroesVolume: 82,
       filterData:[],
+
     }
   },
   methods: {
@@ -119,40 +115,26 @@ export default {
     //       })
     //   }
 
-
-
-
     //},
     ...mapActions([
       'ADD_TO_CART',
       'PAGE_TO_STORE',
       'GET_HEROES_FROM_API',
-    ]),
+      'SEARCH',
 
+    ]),
     // добавляем героя
     addToCart (data) {
       this.ADD_TO_CART(data)
     },
-
-    // поиск
-    sortHeroesBySearchValue (value) {
-      this.sortedHeroes = [...this.HEROES]
-      if (value) {
-        this.sortedHeroes = this.sortedHeroes.filter(function (item) {
-          return item.name.toLowerCase().includes(value.toLowerCase())
-        })
-      } else {
-        this.sortedHeroes = [...this.HEROES]
-      }
-    },
-
     // по клику переходим на выбранную страницу пагинации
     pageClick (page) {
       this.pageNumber = page
     },
-    pageChangeHandler(){
-
+    searchTheHero(value){
+      this.SEARCH(this.searchValue)
     }
+
   },
   computed: {
     ...mapGetters([
@@ -163,49 +145,40 @@ export default {
       'RESP',
       'FILTER_DATA',
       'IMG_NUM',
-
+      'NOTHING_FOUND',
+      'TRANSITION',
     ]),
-    pages () {
-      return Math.ceil(this.sortedHeroes.length / this.heroPerPage)
-    },
-    totalPages(){
-      return Math.ceil(this.heroesVolume / this.heroPerPage)
-    },
-    paginatedHeroes () {
-      const from = (this.pageNumber - 1) * this.heroPerPage
-      const to = from + this.heroPerPage
-
-      if (this.sortedHeroes.length <= this.heroPerPage) {
-        return this.sortedHeroes.slice(0, this.sortedHeroes.length)
-      } else {
-        return this.sortedHeroes.slice(from, to)
-      }
-    }
+    // pages () {
+    //   return Math.ceil(this.sortedHeroes.length / this.heroPerPage)
+    // },
+    // totalPages(){
+    //   return Math.ceil(this.heroesVolume / this.heroPerPage)
+    // },
+    // paginatedHeroes () {
+    //   const from = (this.pageNumber - 1) * this.heroPerPage
+    //   const to = from + this.heroPerPage
+    //
+    //   if (this.sortedHeroes.length <= this.heroPerPage) {
+    //     return this.sortedHeroes.slice(0, this.sortedHeroes.length)
+    //   } else {
+    //     return this.sortedHeroes.slice(from, to)
+    //   }
+    // }
   },
   mounted () {
-    //this.GET_HEROES_FROM_API()
-    //   .then((response) => {
-    //   if (response.data) {
-    //     this.sortHeroesBySearchValue(this.searchValue)
-    //   }
-    // })
 
-    //this.getHeroesFromURL(this.page)
     this.GET_HEROES_FROM_API(this.page)
 
   },
   watch: {
-    searchValue () {
-      this.sortHeroesBySearchValue(this.searchValue)
-    },
+    // searchValue () {
+    //   this.sortHeroesBySearchValue(this.searchValue)
+    // },
     page(){
       this.PAGE_TO_STORE(this.page)
 
     },
-
-
   }
-
 }
 
 </script>

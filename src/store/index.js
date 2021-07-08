@@ -16,7 +16,8 @@ export default createStore({
     resp:[],//данные объектов
     //filterData:[],
     imgNum:0, //номер для изображения
-
+    nothingFound: false,
+    transition: false,
   },
   mutations,
   actions,
